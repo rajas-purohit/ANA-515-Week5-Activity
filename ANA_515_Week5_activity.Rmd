@@ -1,0 +1,39 @@
+---
+title: "ANA 515 Week5 activity"
+author: "Rajas Purohit"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+url1 <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/primary-project-2022/dem_candidates.csv"
+democratCandidates <- read_csv(url1)
+url2 <- "https://raw.githubusercontent.com/fivethirtyeight/data/master/primary-project-2022/rep_candidates.csv"
+republicanCandidates <- read_csv(url2)
+```
+
+Being endorsed by AOC has historically been an indicator of Primary success, looking at the 2020 elections. The following visualization helps summarize candidates' success with their endorsement status. A lot of the skewness can be explained by the lack of data (presence of N/As)
+
+```{r vis1, echo = FALSE}
+ggplot(democratCandidates, 
+       mapping = aes(x = `AOC`, y = `Primary Outcome`)) +
+  geom_count(aes(color = `Primary %`)) +
+  labs(title = "Effect of AOC's endorsement in the 2022 Primary",
+       x = "Endorsed by AOC",
+       y = "Primary Outcome")
+
+```
+
+To say that the 2020 election was a controversial one, would be an understatement. As the outgoing President made unfounded claims about the election being "rigged" against them, a question was asked to Republican electoral nominees at various levels of candidacy. Here are the results on what their opinions were, and whether it cost them the election:
+
+```{r vis2, echo = FALSE}
+ggplot(republicanCandidates, 
+       mapping = aes(y = `Primary Outcome`, x = `2020 Election Stance`)) +
+  geom_jitter(aes(color = `Office`)) +
+  labs(title = "Candidates stance on the 2020 elections 2022 Primary",
+       x = "Opinion on the results of 2020 Election",
+       y = "Primary Outcome")
+```
